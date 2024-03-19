@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "CloudComp project"
+version = "1.0.0"
+description = ""
+authors = ["tsirleo"]
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = "^0.21.1"
+fastapi = "^0.95.0"
+pydantic = {extras = ["dotenv"], version = "^1.10.7"}
+python-multipart = "^0.0.6"
+cryptography = "^38.0.3"
+sqlalchemy = "^2.0.9"
+pymysql = "^1.0.3"
