@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  DB_DRIVER: mysql+pymysql
+  DB_NAME: tsirleo_app_storage
+  DB_PASSWORD: mypassword
+  DB_PORT: "3306"
+  DB_USERNAME: tsirleo-app
+kind: ConfigMap
+metadata:
+  labels:
+    service: server-app--env-local
+  name: env-local

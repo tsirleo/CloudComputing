@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: mysql-db
+  name: mysql-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mysql-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        network/hw-2-default: "true"
+        service: mysql-db
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: tsirleo_app_storage
+            - name: MYSQL_PASSWORD
+              value: mypassword
+            - name: MYSQL_ROOT_PASSWORD
+              value: rootpassword
+            - name: MYSQL_TCP_PORT
+              value: "3306"
+            - name: MYSQL_USER
+              value: tsirleo-app
+          image: tsirleo/mysql-db:cloudcourse
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+                - -u
+                - root
+                - -p$MYSQL_ROOT_PASSWORD
+            failureThreshold: 10
+            periodSeconds: 2
+            timeoutSeconds: 2
+          name: mysql-db
+          ports:
+            - containerPort: 3306
+              hostPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: database-volume
+      restartPolicy: Always
+      volumes:
+        - name: database-volume
+          persistentVolumeClaim:
+            claimName: database-volume

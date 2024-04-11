@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: server-app
+  name: server-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: server-app
+  template:
+    metadata:
+      labels:
+        network/hw-2-default: "true"
+        service: server-app
+    spec:
+      containers:
+        - name: server-app
+          image: tsirleo/server-app:cloudcourse
+          env:
+            - name: DB_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_DRIVER
+                  name: env-local
+            - name: DB_HOST
+              value: mysql-db
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_NAME
+                  name: env-local
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_PASSWORD
+                  name: env-local
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_PORT
+                  name: env-local
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_USERNAME
+                  name: env-local
+          ports:
+            - containerPort: 12345
+              hostPort: 12345
+              protocol: TCP
+      restartPolicy: Always
+
+
