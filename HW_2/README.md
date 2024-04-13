@@ -2,7 +2,7 @@
 
 ## Команды
 
-Все команды выполняются в директории **HW_2**. Для упрощения использутся makefile с различными целями.
+Все команды выполняются в директории **HW_2**. Для упрощения используется makefile с различными целями. Целевая платформа **Linux**, в случае использования MacOS или Windows некоторые из команд могут не сработать, в таком случае смотрите в документацию [Minikube](https://minikube.sigs.k8s.io/docs/start/) и [kubectl](https://kubernetes.io/ru/docs/tasks/tools/install-kubectl/).
 
 **Работа с инструментом minikube**:
 * уcтановка minikube
@@ -27,7 +27,7 @@
     ```
 * запустить дэшборд minikube
     ```shell
-    minikube/dashboard
+    make minikube/dashboard
     ```
 **Работа с инструментом kubectl**:
 * уcтановка kubectl
@@ -58,7 +58,6 @@
     ```shell
     make app/deploy/all
     ```
-  Для запуска в обычном режиме не указывайте `-d` флаг.
 
 * запуск deployments отдельно от создания экземпляров сущностей
     ```shell
@@ -69,6 +68,9 @@
     ```shell
     make get_link
     ```
+    При использовании MacOS данная команда может работать некорректно, поскольку необходимо включать туннелирование. Подробнее можно прочитать [тут](https://minikube.sigs.k8s.io/docs/handbook/accessing/).
+    > The network is limited if using the Docker driver on Darwin, Windows, or WSL, and the Node IP is not reachable directly. \
+      Running minikube on Linux with the Docker driver will result in no tunnel being created.
 
 * полное удаление созданных экземпляров
     ```shell
